@@ -1,19 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <Data v-bind:numbers="numbers" />
+    <Buttons v-on:populate-array="populateArray" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header.vue";
+import Data from "./components/Data.vue";
+import Buttons from "./components/Buttons.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    Data,
+    Buttons,
+  },
+  data() {
+    return {
+      numbers: [],
+    };
+  },
+  created() {
+    this.populateArray();
+  },
+  methods: {
+    populateArray: function() {
+      this.numbers = [];
+
+      for (let i = 0; i < 25; i++) {
+        let randomNumber = Math.round(Math.random() * 90) + 10;
+        this.numbers.push(randomNumber);
+      }
+    },
+  },
+};
 </script>
 
 <style>
