@@ -2,7 +2,11 @@
   <div id="app">
     <Header />
     <Data v-bind:numbers="numbers" />
-    <Buttons v-on:populate-array="populateArray" />
+    <Buttons
+      v-on:populate-array="populateArray"
+      @bubble-sort="bubbleSort"
+      @test="test"
+    />
   </div>
 </template>
 
@@ -29,10 +33,44 @@ export default {
   methods: {
     populateArray: function() {
       this.numbers = [];
+      // randomize the length of the array
+      // let length = Math.round(Math.random() * 5) + 20;
 
       for (let i = 0; i < 25; i++) {
         let randomNumber = Math.round(Math.random() * 90) + 10;
         this.numbers.push(randomNumber);
+      }
+    },
+    test: function() {
+      for (let i = 0; i < 100; i++) {
+        this.populateArray();
+        let testArray = [...this.numbers];
+
+        // test out different functions here
+        this.bubbleSort();
+
+        testArray.sort((a, b) => a - b);
+        let result =
+          this.numbers.length === testArray.length &&
+          this.numbers.every((value, index) => value === testArray[index]);
+        console.log(result);
+      }
+    },
+    bubbleSort: function() {
+      let swap = true;
+      let counter = 0;
+
+      while (swap) {
+        swap = false;
+        for (let i = 0; i < this.numbers.length - 1 - counter; i++) {
+          if (this.numbers[i] > this.numbers[i + 1]) {
+            swap = true;
+            let placeholder = this.numbers[i + 1];
+            this.$set(this.numbers, i + 1, this.numbers[i]);
+            this.$set(this.numbers, i, placeholder);
+          }
+        }
+        counter += 1;
       }
     },
   },
