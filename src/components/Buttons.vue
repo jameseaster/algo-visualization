@@ -43,6 +43,6 @@ export default {
   padding: 5px;
 }
 .btn:hover {
-  background: #666;
+  background: #777;
 }
 </style>
