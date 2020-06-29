@@ -1,6 +1,10 @@
 <template>
   <div class="data">
-    <div v-for="(num, index) in numbers" v-bind:key="index">
+    <div
+      class="value-container"
+      v-for="(num, index) in numbers"
+      v-bind:key="index"
+    >
       <div
         class="numbers"
         :style="{ height: num.value + 'px', 'background-color': num.color }"
@@ -25,16 +29,13 @@ export default {
   justify-content: center;
   align-items: flex-end;
 }
+.value-container {
+  width: 8px;
+}
 .numbers {
   color: white;
   background-color: dodgerblue;
-  width: 15px;
-  margin: 3px;
-}
-.comparing {
-  background-color: #42b983;
-}
-.sortedPosition {
-  background-color: #a768c4;
+  width: 5px;
+  margin: 1px;
 }
 </style>
