@@ -3,7 +3,7 @@
     <button @click="$emit('populate-array')" class="btn">New Array</button>
     <button class="btn" @click="$emit('test')">Test</button>
     <button class="btn" @click="$emit('bubble-sort')">Bubble Sort</button>
-    <button class="btn" @click="insertion">Insertion Sort</button>
+    <button class="btn" @click="$emit('insertion-sort')">Insertion Sort</button>
     <button class="btn" @click="merge">Merge Sort</button>
     <button class="btn" @click="quick">Quick Sort</button>
     <button class="btn" @click="heap">Heap Sort</button>
@@ -15,9 +15,6 @@ export default {
   name: "Buttons",
   props: {},
   methods: {
-    insertion() {
-      console.log("Insertion Sort");
-    },
     merge() {
       console.log("Merge Sort");
     },

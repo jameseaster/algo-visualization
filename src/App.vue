@@ -5,6 +5,7 @@
     <Buttons
       v-on:populate-array="populateArray"
       @bubble-sort="bubbleSort"
+      @insertion-sort="insertionSort"
       @test="test"
     />
   </div>
@@ -39,7 +40,7 @@ export default {
       // randomize the length of the array FOR TESTING
       // let length = Math.round(Math.random() * 5) + 20;
 
-      for (let i = 0; i < 25; i++) {
+      for (let i = 0; i < 100; i++) {
         let value = Math.round(Math.random() * 90) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
@@ -50,21 +51,31 @@ export default {
       for (let i = 0; i < 100; i++) {
         this.populateArray();
         let testArray = [...this.numbers];
+        testArray.sort((a, b) => a.value - b.value);
 
         // test out different functions here
         // this.bubbleSort();
+        // this.insertionSort();
 
-        testArray.sort((a, b) => a - b);
         let result =
           this.numbers.length === testArray.length &&
-          this.numbers.every((value, index) => value === testArray[index]);
+          this.numbers.every((num, i) => num.value === testArray[i].value);
         console.log(result);
       }
     },
     bubbleSort: async function() {
+      // change the color to primary to start sorting algorithm
+      this.numbers.forEach((num, index) => {
+        this.$set(this.numbers, index, {
+          value: num.value,
+          color: this.primary,
+        });
+      });
       let counter = 0;
+      let swap = true;
 
-      while (counter < this.numbers.length) {
+      while (counter < this.numbers.length && swap) {
+        swap = false;
         for (let i = 0; i < this.numbers.length - 1 - counter; i++) {
           // change color of two indeces that are being compared
           let { value: a } = this.numbers[i];
@@ -73,18 +84,16 @@ export default {
           this.$set(this.numbers, i + 1, { value: b, color: this.compare });
 
           // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 50));
+          await new Promise((resolve) => setTimeout(resolve, 10));
 
           // if the first index is greater than the second
           if (this.numbers[i].value > this.numbers[i + 1].value) {
+            swap = true;
             // swap indeces
             let { value, color } = this.numbers[i];
             let { value: tempValue } = this.numbers[i + 1];
             this.$set(this.numbers, i + 1, { value, color });
             this.$set(this.numbers, i, { value: tempValue, color });
-
-            // pauses the event loop to better visualize the algo
-            await new Promise((resolve) => setTimeout(resolve, 20));
           }
 
           // change colors back to primary and set the final index color to sorted
@@ -96,9 +105,66 @@ export default {
         // increment counter
         counter += 1;
       }
-      // change the color to sorted on the final iteration (first index)
-      let { value } = this.numbers[0];
-      this.$set(this.numbers, 0, { value, color: this.sorted });
+      // change the color to sorted on the final iteration
+      this.numbers.forEach((num, index) => {
+        this.$set(this.numbers, index, {
+          value: num.value,
+          color: this.sorted,
+        });
+      });
+    },
+    insertionSort: async function() {
+      const array = this.numbers;
+      // change the color to primary to start sorting algorithm
+      array.forEach((num, index) => {
+        this.$set(array, index, { value: num.value, color: this.primary });
+      });
+
+      for (let i = 1; i < array.length; i++) {
+        let j = i;
+
+        // highlight the values that are being compared
+        let { value: a } = array[j];
+        let { value: b } = array[j - 1];
+        this.$set(array, j, { value: a, color: this.compare });
+        this.$set(array, j - 1, { value: b, color: this.compare });
+
+        // pauses the event loop to better visualize the algo
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
+        // If the second value is greater than the first
+        while (j > 0 && array[j].value < array[j - 1].value) {
+          // swap the values
+          let { value: a } = array[j];
+          let { value: b } = array[j - 1];
+          this.$set(array, j, { value: b, color: this.sorted });
+          this.$set(array, j - 1, { value: a, color: this.compare });
+
+          // highlight the next value to compare to
+          if (array[j - 2]) {
+            let { value } = array[j - 2];
+            this.$set(array, j - 2, { value, color: this.compare });
+          }
+
+          // pauses the event loop to better visualize the algo
+          await new Promise((resolve) => setTimeout(resolve, 10));
+
+          j -= 1;
+        }
+
+        // pauses the event loop to better visualize the algo
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
+        // sets colors to sorted
+        if (array[j]) {
+          let { value: a } = array[j];
+          this.$set(array, j, { value: a, color: this.sorted });
+        }
+        if (array[j - 1]) {
+          let { value: b } = array[j - 1];
+          this.$set(array, j - 1, { value: b, color: this.sorted });
+        }
+      }
     },
   },
 };
