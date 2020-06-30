@@ -6,6 +6,7 @@
       v-on:populate-array="populateArray"
       @bubble-sort="bubbleSort"
       @insertion-sort="insertionSort"
+      @selection-sort="selectionSort"
       @test="test"
     />
   </div>
@@ -40,7 +41,7 @@ export default {
       // randomize the length of the array FOR TESTING
       // let length = Math.round(Math.random() * 5) + 20;
 
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 30; i++) {
         let value = Math.round(Math.random() * 90) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
@@ -56,6 +57,7 @@ export default {
         // test out different functions here
         // this.bubbleSort();
         // this.insertionSort();
+        // this.selectionSort();
 
         let result =
           this.numbers.length === testArray.length &&
@@ -84,7 +86,7 @@ export default {
           this.$set(this.numbers, i + 1, { value: b, color: this.compare });
 
           // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 10));
+          await new Promise((resolve) => setTimeout(resolve, 20));
 
           // if the first index is greater than the second
           if (this.numbers[i].value > this.numbers[i + 1].value) {
@@ -130,7 +132,7 @@ export default {
         this.$set(array, j - 1, { value: b, color: this.compare });
 
         // pauses the event loop to better visualize the algo
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 20));
 
         // If the second value is greater than the first
         while (j > 0 && array[j].value < array[j - 1].value) {
@@ -147,13 +149,13 @@ export default {
           }
 
           // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 10));
+          await new Promise((resolve) => setTimeout(resolve, 20));
 
           j -= 1;
         }
 
         // pauses the event loop to better visualize the algo
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 20));
 
         // sets colors to sorted
         if (array[j]) {
@@ -164,6 +166,53 @@ export default {
           let { value: b } = array[j - 1];
           this.$set(array, j - 1, { value: b, color: this.sorted });
         }
+      }
+    },
+    selectionSort: async function() {
+      const array = this.numbers;
+      let currentIdx = 0;
+      while (currentIdx < array.length) {
+        let smallestIdx = currentIdx;
+        for (let i = currentIdx + 1; i < array.length; i++) {
+          // highlight only the values that are being compared
+          let { value } = array[currentIdx];
+          this.$set(array, currentIdx, { value, color: this.compare });
+          let { value: iIdx } = array[i];
+          this.$set(array, i, { value: iIdx, color: this.compare });
+
+          // // pauses the event loop to better visualize the algo
+          await new Promise((resolve) => setTimeout(resolve, 15));
+
+          // If a value smaller than the value at smallestIdx is found
+          if (array[i].value < array[smallestIdx].value) {
+            // change the number at the smallest index to the primary color
+            let { value } = array[smallestIdx];
+            this.$set(array, smallestIdx, { value, color: this.primary });
+            // smallest index now equals i
+            smallestIdx = i;
+            // Highlight the new smallest with gold
+            let { value: iValue } = array[i];
+            this.$set(array, i, { value: iValue, color: "gold" });
+          }
+
+          if (smallestIdx !== i) {
+            // Change comparison color back to primary to highlight the next comparison
+            this.$set(array, i, { value: iIdx, color: this.primary });
+          }
+        }
+
+        if (smallestIdx !== currentIdx) {
+          // Swap values and set sorted color
+          let { value: a } = array[smallestIdx];
+          let { value: b } = array[currentIdx];
+          this.$set(array, smallestIdx, { value: b, color: this.primary });
+          this.$set(array, currentIdx, { value: a, color: this.sorted });
+        }
+        // Set sorted color even if smallesIdx === currentIdx
+        let { value } = array[currentIdx];
+        this.$set(array, currentIdx, { value, color: this.sorted });
+
+        currentIdx += 1;
       }
     },
   },
