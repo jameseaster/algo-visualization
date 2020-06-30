@@ -30,12 +30,12 @@ export default {
   align-items: flex-end;
 }
 .value-container {
-  width: 8px;
+  width: 6px;
 }
 .numbers {
   color: white;
   background-color: dodgerblue;
-  width: 5px;
+  width: 4px;
   margin: 1px;
 }
 </style>

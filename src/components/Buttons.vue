@@ -1,7 +1,7 @@
 <template>
   <div>
     <button @click="$emit('populate-array')" class="btn">New Array</button>
-    <button class="btn" @click="$emit('test')">Test</button>
+    <!-- <button class="btn" @click="$emit('test')">Test</button> -->
     <button class="btn" @click="$emit('bubble-sort')">Bubble Sort</button>
     <button class="btn" @click="$emit('insertion-sort')">Insertion Sort</button>
     <button class="btn" @click="$emit('selection-sort')">Selection Sort</button>

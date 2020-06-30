@@ -39,10 +39,8 @@ export default {
   methods: {
     populateArray: function() {
       this.numbers = [];
-      // randomize the length of the array FOR TESTING
-      // let length = Math.round(Math.random() * 5) + 20;
 
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 100; i++) {
         let value = Math.round(Math.random() * 90) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
@@ -68,9 +66,10 @@ export default {
       }
     },
     bubbleSort: async function() {
+      let array = this.numbers;
       // change the color to primary to start sorting algorithm
-      this.numbers.forEach((num, index) => {
-        this.$set(this.numbers, index, {
+      array.forEach((num, index) => {
+        this.$set(array, index, {
           value: num.value,
           color: this.primary,
         });
@@ -78,40 +77,40 @@ export default {
       let counter = 0;
       let swap = true;
 
-      while (counter < this.numbers.length && swap) {
+      while (counter < array.length && swap) {
         swap = false;
-        for (let i = 0; i < this.numbers.length - 1 - counter; i++) {
+        for (let i = 0; i < array.length - 1 - counter; i++) {
           // change color of two indeces that are being compared
-          let { value: a } = this.numbers[i];
-          let { value: b } = this.numbers[i + 1];
-          this.$set(this.numbers, i, { value: a, color: this.compare });
-          this.$set(this.numbers, i + 1, { value: b, color: this.compare });
+          let { value: a } = array[i];
+          let { value: b } = array[i + 1];
+          this.$set(array, i, { value: a, color: this.compare });
+          this.$set(array, i + 1, { value: b, color: this.compare });
 
           // pauses the event loop to better visualize the algo
           await new Promise((resolve) => setTimeout(resolve, 20));
 
           // if the first index is greater than the second
-          if (this.numbers[i].value > this.numbers[i + 1].value) {
+          if (array[i].value > array[i + 1].value) {
             swap = true;
             // swap indeces
-            let { value, color } = this.numbers[i];
-            let { value: tempValue } = this.numbers[i + 1];
-            this.$set(this.numbers, i + 1, { value, color });
-            this.$set(this.numbers, i, { value: tempValue, color });
+            let { value, color } = array[i];
+            let { value: tempValue } = array[i + 1];
+            this.$set(array, i + 1, { value, color });
+            this.$set(array, i, { value: tempValue, color });
           }
 
           // change colors back to primary and set the final index color to sorted
-          let { value: newA } = this.numbers[i];
-          let { value: newB } = this.numbers[i + 1];
-          this.$set(this.numbers, i, { value: newA, color: this.primary });
-          this.$set(this.numbers, i + 1, { value: newB, color: this.sorted });
+          let { value: newA } = array[i];
+          let { value: newB } = array[i + 1];
+          this.$set(array, i, { value: newA, color: this.primary });
+          this.$set(array, i + 1, { value: newB, color: this.sorted });
         }
         // increment counter
         counter += 1;
       }
       // change the color to sorted on the final iteration
-      this.numbers.forEach((num, index) => {
-        this.$set(this.numbers, index, {
+      array.forEach((num, index) => {
+        this.$set(array, index, {
           value: num.value,
           color: this.sorted,
         });
@@ -183,7 +182,7 @@ export default {
           this.$set(array, i, { value: iIdx, color: this.compare });
 
           // // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 15));
+          await new Promise((resolve) => setTimeout(resolve, 0.5));
 
           // If a value smaller than the value at smallestIdx is found
           if (array[i].value < array[smallestIdx].value) {
@@ -217,13 +216,24 @@ export default {
         currentIdx += 1;
       }
     },
-    quickSort: function(
+    quickSort: async function(
       array = this.numbers,
       startIdx = 0,
       endIdx = array.length - 1
     ) {
       // if the array is less than length 2, return
-      if (startIdx >= endIdx) return array;
+      if (startIdx >= endIdx) {
+        // change the colors of this array to sorted
+        if (array[startIdx]) {
+          let { value } = array[startIdx];
+          this.$set(array, startIdx, { value, color: this.sorted });
+        }
+        if (array[endIdx]) {
+          let { value } = array[endIdx];
+          this.$set(array, endIdx, { value, color: this.sorted });
+        }
+        return array;
+      }
       // create a pivot at the startIdx
       let pivot = startIdx;
       // left pointer is pivot + 1
@@ -231,34 +241,63 @@ export default {
       // right pointer is the end of the array
       let right = endIdx;
 
+      // // start each array with primary colors
+      array.forEach((num, index) => {
+        if (index >= startIdx && index <= endIdx) {
+          num.color = this.primary;
+        }
+      });
+
+      // set pivot color to be gold
+      let { value } = array[pivot];
+      this.$set(array, pivot, { value, color: "gold" });
+
       // while left pointer is less than or equal to right pivot
       while (left <= right) {
+        // right and left pointers can be compare color
+        let { value: l } = array[left];
+        let { value: r } = array[right];
+        this.$set(array, left, { value: l, color: this.compare });
+        this.$set(array, right, { value: r, color: this.compare });
+
+        // pauses the event loop to better visualize the algo
+        await new Promise((resolve) => setTimeout(resolve, 20));
+
         // If value at left > pivot && value at right < pivot
         if (
           array[left].value > array[pivot].value &&
           array[right].value < array[pivot].value
         ) {
           // swap left and right values
-          let placeholder = array[left];
-          array[left] = array[right];
-          array[right] = placeholder;
+          let { value: l } = array[left];
+          let { value: r } = array[right];
+          this.$set(array, left, { value: r, color: array[left].color });
+          this.$set(array, right, { value: l, color: array[right].color });
         }
 
         // pivot value is >= left pointer, increase left pointer
         if (array[pivot].value >= array[left].value) {
+          let { value: newVal } = array[left];
+          this.$set(array, left, { value: newVal, color: this.primary });
           left += 1;
         }
 
         // pivot value is <= right pointer, decrease right pointer
         if (array[pivot].value <= array[right].value) {
+          let { value: newVal } = array[right];
+          this.$set(array, right, { value: newVal, color: this.primary });
           right -= 1;
         }
       }
 
+      // pauses the event loop to better visualize the algo
+      await new Promise((resolve) => setTimeout(resolve, 20));
+
       // Swap the values of pivot and right pointer
-      let placeholder = array[right];
-      array[right] = array[pivot];
-      array[pivot] = placeholder;
+      let { value: p } = array[pivot];
+      let { value: rValue } = array[right];
+      this.$set(array, pivot, { value: rValue, color: this.compare });
+      this.$set(array, right, { value: p, color: this.sorted });
 
       // find the smaller of the two remaining arrays
       let leftArrayIsSmaller = right - 1 - startIdx < endIdx - right + 1;
@@ -272,7 +311,6 @@ export default {
         this.quickSort(array, startIdx, right - 1);
       }
 
-      console.log(array.map((x) => x.value));
       return array;
     },
   },
