@@ -5,8 +5,8 @@
     <button class="btn" @click="$emit('bubble-sort')">Bubble Sort</button>
     <button class="btn" @click="$emit('insertion-sort')">Insertion Sort</button>
     <button class="btn" @click="$emit('selection-sort')">Selection Sort</button>
+    <button class="btn" @click="$emit('quick-sort')">Quick Sort</button>
     <button class="btn" @click="merge">Merge Sort</button>
-    <button class="btn" @click="quick">Quick Sort</button>
     <button class="btn" @click="heap">Heap Sort</button>
   </div>
 </template>
@@ -18,9 +18,6 @@ export default {
   methods: {
     merge() {
       console.log("Merge Sort");
-    },
-    quick() {
-      console.log("Quick Sort");
     },
     heap() {
       console.log("Heap Sort");

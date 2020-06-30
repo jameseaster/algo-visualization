@@ -7,6 +7,7 @@
       @bubble-sort="bubbleSort"
       @insertion-sort="insertionSort"
       @selection-sort="selectionSort"
+      @quick-sort="quickSort"
       @test="test"
     />
   </div>
@@ -58,6 +59,7 @@ export default {
         // this.bubbleSort();
         // this.insertionSort();
         // this.selectionSort();
+        // this.quickSort();
 
         let result =
           this.numbers.length === testArray.length &&
@@ -214,6 +216,64 @@ export default {
 
         currentIdx += 1;
       }
+    },
+    quickSort: function(
+      array = this.numbers,
+      startIdx = 0,
+      endIdx = array.length - 1
+    ) {
+      // if the array is less than length 2, return
+      if (startIdx >= endIdx) return array;
+      // create a pivot at the startIdx
+      let pivot = startIdx;
+      // left pointer is pivot + 1
+      let left = pivot + 1;
+      // right pointer is the end of the array
+      let right = endIdx;
+
+      // while left pointer is less than or equal to right pivot
+      while (left <= right) {
+        // If value at left > pivot && value at right < pivot
+        if (
+          array[left].value > array[pivot].value &&
+          array[right].value < array[pivot].value
+        ) {
+          // swap left and right values
+          let placeholder = array[left];
+          array[left] = array[right];
+          array[right] = placeholder;
+        }
+
+        // pivot value is >= left pointer, increase left pointer
+        if (array[pivot].value >= array[left].value) {
+          left += 1;
+        }
+
+        // pivot value is <= right pointer, decrease right pointer
+        if (array[pivot].value <= array[right].value) {
+          right -= 1;
+        }
+      }
+
+      // Swap the values of pivot and right pointer
+      let placeholder = array[right];
+      array[right] = array[pivot];
+      array[pivot] = placeholder;
+
+      // find the smaller of the two remaining arrays
+      let leftArrayIsSmaller = right - 1 - startIdx < endIdx - right + 1;
+
+      // call quickSort on smallest remaining array first
+      if (leftArrayIsSmaller) {
+        this.quickSort(array, startIdx, right - 1);
+        this.quickSort(array, right + 1, endIdx);
+      } else {
+        this.quickSort(array, right + 1, endIdx);
+        this.quickSort(array, startIdx, right - 1);
+      }
+
+      console.log(array.map((x) => x.value));
+      return array;
     },
   },
 };
