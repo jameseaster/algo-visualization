@@ -1,26 +1,22 @@
 <template>
   <div>
-    <button @click="$emit('populate-array')" class="btn">New Array</button>
+    <button @click="$emit('new-array')" class="btn">New Array</button>
+    <button class="btn" @click="$emit('bubble')">Bubble Sort</button>
+    <button class="btn" @click="$emit('insertion')">Insertion Sort</button>
+    <button class="btn" @click="$emit('selection')">Selection Sort</button>
+    <button class="btn" @click="$emit('quick')">Quick Sort</button>
+    <button class="btn" @click="$emit('heap')">Heap Sort</button>
     <!-- <button class="btn" @click="$emit('test')">Test</button> -->
-    <button class="btn" @click="$emit('bubble-sort')">Bubble Sort</button>
-    <button class="btn" @click="$emit('insertion-sort')">Insertion Sort</button>
-    <button class="btn" @click="$emit('selection-sort')">Selection Sort</button>
-    <button class="btn" @click="$emit('quick-sort')">Quick Sort</button>
     <button class="btn" @click="merge">Merge Sort</button>
-    <button class="btn" @click="heap">Heap Sort</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Buttons",
-  props: {},
   methods: {
     merge() {
       console.log("Merge Sort");
-    },
-    heap() {
-      console.log("Heap Sort");
     },
   },
 };
