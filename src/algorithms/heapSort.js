@@ -1,13 +1,26 @@
-function heapSort(ref, array) {
+async function heapSort(ref, array) {
   // build max heap
   buildMaxHeap(ref, array);
   // while endpoint is greater than 0
   for (let endIdx = array.length - 1; endIdx > 0; endIdx--) {
     // swap first value with the last
     swap(ref, 0, endIdx, array);
+
     // siftDown first value, leaving max at the end
     siftDown(ref, 0, endIdx - 1, array);
+
+    // change the color of the endIdx, its in its sorted position
+    let { value } = array[endIdx];
+    ref.$set(array, endIdx, { value, color: ref.sorted });
+
+    // pauses the event loop to better visualize the algo
+    await new Promise((resolve) => setTimeout(resolve, 80));
   }
+
+  // change the color of the first, its in its sorted position
+  let { value } = array[0];
+  ref.$set(array, 0, { value, color: ref.sorted });
+
   return array;
 }
 
@@ -22,6 +35,8 @@ function buildMaxHeap(ref, array) {
 }
 
 function siftDown(ref, currentIdx, endIdx, array) {
+  colorLevels(ref, array, endIdx);
+
   // find first child
   let childOneIdx = currentIdx * 2 + 1;
   // largest child index
@@ -58,15 +73,40 @@ function siftDown(ref, currentIdx, endIdx, array) {
   }
 }
 
-function swap(ref, a, b, array) {
-  // const temp = array[a];
-  // array[a] = array[b];
-  // array[b] = temp;
+async function swap(ref, a, b, array) {
+  // swap the values
+  let { value: aVal, color: aCol } = array[a];
+  let { value: bVal, color: bCol } = array[b];
 
-  let { value: aVal } = array[a];
-  let { value: bVal } = array[b];
-  ref.$set(array, a, { value: bVal, color: ref.sorted });
-  ref.$set(array, b, { value: aVal, color: ref.sorted });
+  ref.$set(array, a, { value: bVal, color: aCol });
+  ref.$set(array, b, { value: aVal, color: bCol });
+}
+
+function colorLevels(ref, array, endIdx) {
+  const colors = {
+    1: "gold",
+    2: "#00ff99",
+    3: "#00ccff",
+    4: "pink",
+    5: "#0066cc",
+    6: "purple",
+    7: "silver",
+    8: "brown",
+    9: "orange",
+    10: "white",
+  };
+
+  // set the color based on the level in the heap
+  array.forEach((num, index) => {
+    if (index === 0) {
+      let { value } = num;
+      ref.$set(array, index, { value, color: "white" });
+    } else if (index > 0 && index < endIdx) {
+      let level = 1 + Math.floor(Math.log(index + 1) / Math.log(2));
+      let { value } = num;
+      ref.$set(array, index, { value, color: colors[level - 1] });
+    }
+  });
 }
 
 module.exports = heapSort;
