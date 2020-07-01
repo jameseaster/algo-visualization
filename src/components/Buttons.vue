@@ -6,19 +6,14 @@
     <button class="btn" @click="$emit('selection')">Selection Sort</button>
     <button class="btn" @click="$emit('quick')">Quick Sort</button>
     <button class="btn" @click="$emit('heap')">Heap Sort</button>
+    <!-- <button class="btn">Merge Sort</button> -->
     <!-- <button class="btn" @click="$emit('test')">Test</button> -->
-    <button class="btn" @click="merge">Merge Sort</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Buttons",
-  methods: {
-    merge() {
-      console.log("Merge Sort");
-    },
-  },
 };
 </script>
 
