@@ -14,7 +14,7 @@ async function insertionSort(ref, array) {
     ref.$set(array, j - 1, { value: b, color: ref.compare });
 
     // pauses the event loop to better visualize the algo
-    await new Promise((resolve) => setTimeout(resolve, 20));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     // If the second value is greater than the first
     while (j > 0 && array[j].value < array[j - 1].value) {
@@ -31,13 +31,13 @@ async function insertionSort(ref, array) {
       }
 
       // pauses the event loop to better visualize the algo
-      await new Promise((resolve) => setTimeout(resolve, 20));
+      await new Promise((resolve) => setTimeout(resolve, 10));
 
       j -= 1;
     }
 
     // pauses the event loop to better visualize the algo
-    await new Promise((resolve) => setTimeout(resolve, 20));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     // sets colors to sorted
     if (array[j]) {

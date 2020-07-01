@@ -19,7 +19,7 @@ async function bubbleSort(ref, array) {
       ref.$set(array, i + 1, { value: b, color: ref.compare });
 
       // pauses the event loop to better visualize the algo
-      await new Promise((resolve) => setTimeout(resolve, 20));
+      await new Promise((resolve) => setTimeout(resolve, 1));
 
       // if the first index is greater than the second
       if (array[i].value > array[i + 1].value) {
