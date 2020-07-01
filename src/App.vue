@@ -46,9 +46,9 @@ export default {
   methods: {
     populateArray: function() {
       this.numbers = [];
-      const length = 50;
+      const length = 75;
       for (let i = 0; i < length; i++) {
-        let value = Math.round(Math.random() * 90) + 10;
+        let value = Math.round(Math.random() * 200) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
       }
