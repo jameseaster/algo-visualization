@@ -39,6 +39,7 @@ export default {
       primary: "dodgerblue",
       compare: "#66FCF1",
       sorted: "#A768C4",
+      lastAlgo: "",
     };
   },
   created() {
@@ -46,34 +47,44 @@ export default {
   },
   methods: {
     populateArray: function() {
+      this.lastAlgo = "";
       this.numbers = [];
       const length = 50;
       for (let i = 0; i < length; i++) {
-        let value = Math.round(Math.random() * 150) + 10;
+        let value = Math.round(Math.random() * 300) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
       }
     },
     bubble: function() {
+      this.lastAlgo = "bubble";
       bubbleSort(this, this.numbers);
     },
     insertion: function() {
+      this.lastAlgo = "insertion";
       insertionSort(this, this.numbers);
     },
     selection: function() {
+      this.lastAlgo = "selection";
       selectionSort(this, this.numbers);
     },
     quick: function() {
+      this.lastAlgo = "quick";
       quickSort(this, this.numbers, 0, this.numbers.length - 1);
     },
     heap: function() {
+      this.lastAlgo = "heap";
       heapSort(this, this.numbers);
     },
     merge: function() {
+      this.lastAlgo = "merge";
       this.animate(mergeSort(this, this.numbers));
     },
     animate: async function(animations) {
       for (let todo of animations) {
+        if (this.lastAlgo !== "merge") {
+          break;
+        }
         if (todo.action === "compare") {
           // changes the color of the two indexes being compared
           let { value: val1, color: col1 } = this.numbers[todo.idx1];
