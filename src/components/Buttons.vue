@@ -6,7 +6,7 @@
     <button class="btn" @click="$emit('selection')">Selection Sort</button>
     <button class="btn" @click="$emit('quick')">Quick Sort</button>
     <button class="btn" @click="$emit('heap')">Heap Sort</button>
-    <!-- <button class="btn">Merge Sort</button> -->
+    <button class="btn" @click="$emit('merge')">Merge Sort</button>
     <!-- <button class="btn" @click="$emit('test')">Test</button> -->
   </div>
 </template>

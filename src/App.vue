@@ -9,6 +9,7 @@
       @selection="selection"
       @quick="quick"
       @heap="heap"
+      @merge="merge"
       @test="test"
     />
   </div>
@@ -23,7 +24,7 @@ import insertionSort from "./algorithms/insertionSort.js";
 import selectionSort from "./algorithms/selectionSort.js";
 import quickSort from "./algorithms/quickSort.js";
 import heapSort from "./algorithms/heapSort.js";
-import testAlgorithm from "./algorithms/testAlgorithm.js";
+import mergeSort from "./algorithms/mergeSort.js";
 
 export default {
   name: "App",
@@ -46,7 +47,7 @@ export default {
   methods: {
     populateArray: function() {
       this.numbers = [];
-      const length = 75;
+      const length = 50;
       for (let i = 0; i < length; i++) {
         let value = Math.round(Math.random() * 200) + 10;
         let color = this.primary;
@@ -68,9 +69,29 @@ export default {
     heap: function() {
       heapSort(this, this.numbers);
     },
+    merge: function() {
+      mergeSort(this, this.numbers);
+    },
     test: function() {
-      // REMOVE ANY AWAIT KEYWORDS FOR TESTING //
-      testAlgorithm(this, this.numbers);
+      // REMOVE ANY AWAIT KEYWORDS FOR PROPER TESTING //
+      for (let i = 0; i < 100; i++) {
+        this.populateArray();
+        let testArray = [...this.numbers];
+        testArray.sort((a, b) => a.value - b.value);
+
+        // Choose an algorithm to test:
+        // this.bubbleSort();
+        // this.insertionSort();
+        // this.selectionSort();
+        // this.quickSort();
+        // this.heap();
+        // this.merge();
+
+        let result =
+          this.numbers.length === testArray.length &&
+          this.numbers.every((num, i) => num.value === testArray[i].value);
+        console.log(result);
+      }
     },
   },
 };
