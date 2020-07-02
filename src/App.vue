@@ -49,7 +49,7 @@ export default {
       this.numbers = [];
       const length = 50;
       for (let i = 0; i < length; i++) {
-        let value = Math.round(Math.random() * 200) + 10;
+        let value = Math.round(Math.random() * 150) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
       }
@@ -63,14 +63,53 @@ export default {
     selection: function() {
       selectionSort(this, this.numbers);
     },
-    quick: async function() {
+    quick: function() {
       quickSort(this, this.numbers, 0, this.numbers.length - 1);
     },
     heap: function() {
       heapSort(this, this.numbers);
     },
     merge: function() {
-      mergeSort(this, this.numbers);
+      this.animate(mergeSort(this, this.numbers));
+    },
+    animate: async function(animations) {
+      for (let todo of animations) {
+        if (todo.action === "compare") {
+          // changes the color of the two indexes being compared
+          let { value: val1, color: col1 } = this.numbers[todo.idx1];
+          let { value: val2, color: col2 } = this.numbers[todo.idx2];
+          this.$set(this.numbers, todo.idx1, {
+            value: val1,
+            color: this.compare,
+          });
+          this.$set(this.numbers, todo.idx2, {
+            value: val2,
+            color: this.compare,
+          });
+
+          // pauses the event loop to better visualize the algo
+          await new Promise((resolve) => setTimeout(resolve, 20));
+
+          // changes the colors back to original color
+          this.$set(this.numbers, todo.idx1, {
+            value: val1,
+            color: col1,
+          });
+          this.$set(this.numbers, todo.idx2, {
+            value: val2,
+            color: col2,
+          });
+        } else {
+          // pauses the event loop to better visualize the algo
+          await new Promise((resolve) => setTimeout(resolve, 20));
+
+          // overwrite idx1 with idx2, change color to sorted
+          this.$set(this.numbers, todo.idx1, {
+            value: todo.value,
+            color: this.sorted,
+          });
+        }
+      }
     },
     test: function() {
       // REMOVE ANY AWAIT KEYWORDS FOR PROPER TESTING //
