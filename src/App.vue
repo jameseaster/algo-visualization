@@ -3,6 +3,7 @@
     <Header />
     <Data v-bind:numbers="numbers" />
     <Buttons
+      v-bind:wideView="wideView"
       @new-array="populateArray"
       @bubble="bubble"
       @insertion="insertion"
@@ -16,6 +17,10 @@
 </template>
 
 <script>
+import Vue from "vue";
+import VueWindowSize from "vue-window-size";
+Vue.use(VueWindowSize);
+
 import Header from "./components/Header.vue";
 import Data from "./components/Data.vue";
 import Buttons from "./components/Buttons.vue";
@@ -40,7 +45,13 @@ export default {
       compare: "#66FCF1",
       sorted: "#A768C4",
       lastAlgo: "",
+      width: this.windowWidth,
     };
+  },
+  computed: {
+    wideView: function() {
+      return this.windowWidth > 500;
+    },
   },
   created() {
     this.populateArray();
@@ -49,9 +60,9 @@ export default {
     populateArray: function() {
       this.lastAlgo = "";
       this.numbers = [];
-      const length = 50;
+      const length = this.windowWidth > 650 ? 100 : 50;
       for (let i = 0; i < length; i++) {
-        let value = Math.round(Math.random() * 300) + 10;
+        let value = Math.round(Math.random() * 250) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
       }

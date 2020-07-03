@@ -1,5 +1,8 @@
 <template>
-  <div class="container-btn">
+  <div
+    class="container-btn"
+    :style="{ 'max-width': this.wideView ? '630px' : '400px' }"
+  >
     <!-- <button class="btn" @click="$emit('test')">Test</button> -->
     <button class="btn new-array" @click="$emit('new-array')">New Array</button>
     <button class="btn" @click="$emit('bubble')">Bubble Sort</button>
@@ -14,12 +17,14 @@
 <script>
 export default {
   name: "Buttons",
+  props: {
+    wideView: Boolean,
+  },
 };
 </script>
 
 <style scoped>
 .container-btn {
-  max-width: 400px;
   margin: auto;
 }
 .btn {

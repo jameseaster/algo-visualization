@@ -28,7 +28,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  height: 315px;
+  height: 260px;
 }
 .value-container {
   width: 6px;
