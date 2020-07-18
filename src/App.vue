@@ -2,7 +2,16 @@
   <div id="app">
     <Header />
     <Data v-bind:numbers="numbers" />
-    <Buttons
+    <Dropdown
+      @new-array="populateArray"
+      @bubble="bubble"
+      @insertion="insertion"
+      @selection="selection"
+      @quick="quick"
+      @heap="heap"
+      @merge="merge"
+    />
+    <!-- <Buttons
       v-bind:wideView="wideView"
       @new-array="populateArray"
       @bubble="bubble"
@@ -12,7 +21,7 @@
       @heap="heap"
       @merge="merge"
       @test="test"
-    />
+    /> -->
   </div>
 </template>
 
@@ -21,9 +30,10 @@ import Vue from "vue";
 import VueWindowSize from "vue-window-size";
 Vue.use(VueWindowSize);
 
+import Dropdown from "./components/Dropdown.vue";
 import Header from "./components/Header.vue";
 import Data from "./components/Data.vue";
-import Buttons from "./components/Buttons.vue";
+// import Buttons from "./components/Buttons.vue";
 import bubbleSort from "./algorithms/bubbleSort.js";
 import insertionSort from "./algorithms/insertionSort.js";
 import selectionSort from "./algorithms/selectionSort.js";
@@ -36,7 +46,8 @@ export default {
   components: {
     Header,
     Data,
-    Buttons,
+    // Buttons,
+    Dropdown,
   },
   data() {
     return {
