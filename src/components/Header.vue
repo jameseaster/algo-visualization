@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Algo Visualizer</h1>
+    <h1>Sorting Visualizer</h1>
   </div>
 </template>
 
