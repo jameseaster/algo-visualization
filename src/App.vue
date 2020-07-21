@@ -11,17 +11,6 @@
       @heap="heap"
       @merge="merge"
     />
-    <!-- <Buttons
-      v-bind:wideView="wideView"
-      @new-array="populateArray"
-      @bubble="bubble"
-      @insertion="insertion"
-      @selection="selection"
-      @quick="quick"
-      @heap="heap"
-      @merge="merge"
-      @test="test"
-    /> -->
   </div>
 </template>
 
@@ -33,20 +22,18 @@ Vue.use(VueWindowSize);
 import Dropdown from "./components/Dropdown.vue";
 import Header from "./components/Header.vue";
 import Data from "./components/Data.vue";
-// import Buttons from "./components/Buttons.vue";
-import bubbleSort from "./algorithms/bubbleSort.js";
-import insertionSort from "./algorithms/insertionSort.js";
-import selectionSort from "./algorithms/selectionSort.js";
-import quickSort from "./algorithms/quickSort.js";
-import heapSort from "./algorithms/heapSort.js";
-import mergeSort from "./algorithms/mergeSort.js";
+import bubbleSort from "./algorithms/bubbleSort/bubbleSort.js";
+import insertionSort from "./algorithms/insertionSort/insertionSort.js";
+import selectionSort from "./algorithms/selectionSort/selectionSort.js";
+import quickSort from "./algorithms/quickSort/quickSort.js";
+import heapSort from "./algorithms/heapSort/heapSort.js";
+import mergeSort from "./algorithms/mergeSort/mergeSort.js";
 
 export default {
   name: "App",
   components: {
     Header,
     Data,
-    // Buttons,
     Dropdown,
   },
   data() {
@@ -71,7 +58,7 @@ export default {
     populateArray: function() {
       this.lastAlgo = "";
       this.numbers = [];
-      const length = this.windowWidth > 650 ? 100 : 50;
+      const length = this.windowWidth > 650 ? 60 : 30;
       for (let i = 0; i < length; i++) {
         let value = Math.round(Math.random() * 250) + 10;
         let color = this.primary;
@@ -100,6 +87,7 @@ export default {
     },
     merge: function() {
       this.lastAlgo = "merge";
+      console.log("test");
       this.animate(mergeSort(this, this.numbers));
     },
     animate: async function(animations) {
@@ -107,6 +95,7 @@ export default {
         if (this.lastAlgo !== "merge") {
           break;
         }
+
         if (todo.action === "compare") {
           // changes the color of the two indexes being compared
           let { value: val1, color: col1 } = this.numbers[todo.idx1];
