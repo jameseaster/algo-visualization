@@ -2,6 +2,7 @@ function mergeSort(ref, array) {
   // an array to hold a list of all of the animations
   const animations = [];
   array = [...array];
+
   // if array is 1 index or fewer, return
   if (array.length <= 1) return array;
 
@@ -10,12 +11,6 @@ function mergeSort(ref, array) {
 
   // splits and swaps the arrays, also creates midIdx pointer
   mergeSortHelper(ref, array, 0, array.length - 1, arrayCopy, animations);
-
-  // logs the the order of sorted array
-  // console.log(
-  //   "ARRAY ORDER:",
-  //   array.map((x) => x.value)
-  // );
 
   // returns array of animations
   return animations;
@@ -33,18 +28,10 @@ function mergeSortHelper(ref, array, startIdx, endIdx, arrayCopy, animations) {
   mergeSortHelper(ref, arrayCopy, midIdx + 1, endIdx, array, animations);
 
   // swap arrays back and merge them passing in all pointers
-  mergeArrays(ref, array, startIdx, midIdx, endIdx, arrayCopy, animations);
+  mergeArrays(array, startIdx, midIdx, endIdx, arrayCopy, animations);
 }
 
-function mergeArrays(
-  ref,
-  array,
-  startIdx,
-  midIdx,
-  endIdx,
-  arrayCopy,
-  animations
-) {
+function mergeArrays(array, startIdx, midIdx, endIdx, arrayCopy, animations) {
   // beginning of left portion of array
   let i = startIdx;
   // beginning of right portion of array
@@ -59,7 +46,7 @@ function mergeArrays(
 
     // if index in left side < index on right side
     if (arrayCopy[i].value < arrayCopy[j].value) {
-      // light these up idx1 to show that it is in its final position
+      // light these up to show that it is in its final position
       animations.push({
         action: "overwrite",
         idx1: k,
@@ -67,7 +54,7 @@ function mergeArrays(
       });
       array[k++] = arrayCopy[i++];
     } else {
-      // light these up idx1 to show that it is in its final position
+      // light these up to show that it is in its final position
       animations.push({
         action: "overwrite",
         idx1: k,
@@ -79,7 +66,7 @@ function mergeArrays(
 
   // if there are values remaining, overwrite array with them
   while (i <= midIdx) {
-    // light these up idx1 to show that it is in its final position
+    // light these up to show that they are in their final position
     animations.push({
       action: "overwrite",
       idx1: k,
@@ -88,7 +75,7 @@ function mergeArrays(
     array[k++] = arrayCopy[i++];
   }
   while (j <= endIdx) {
-    // light these up idx1 to show that it is in its final position
+    // light these up to show that they are in their final position
     animations.push({
       action: "overwrite",
       idx1: k,
