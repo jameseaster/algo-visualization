@@ -31,12 +31,13 @@ export default {
   height: 260px;
 }
 .value-container {
-  width: 6px;
+  width: 10px;
 }
 .numbers {
   color: white;
   background-color: dodgerblue;
-  width: 4px;
-  margin: 1px;
+  width: 5px;
+  margin: 2px;
+  border-radius: 3px 3px 0px 0px;
 }
 </style>
