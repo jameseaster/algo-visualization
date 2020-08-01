@@ -32,6 +32,8 @@ export default {
 }
 .numbers {
   flex-grow: 100;
+  color: white;
+  background-color: dodgerblue;
   border-radius: 5px 5px 0px 0px;
 }
 </style>
