@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center">
+  <b-row align-h="center" class="container">
     <b-collapse id="collapse-1" class="mt-2">
       <b-card class="mt-1 mb-5 mx-3">
         <p class="card-text">{{ getInformation(algorithm) }}</p>
@@ -41,4 +41,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
