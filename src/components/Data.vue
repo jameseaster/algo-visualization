@@ -1,5 +1,5 @@
 <template>
-  <b-container class="data" fluid>
+  <b-container class="data pt-auto" fluid>
     <b-row
       class="mx-auto"
       :style="{ 'flex-grow': 1 }"
@@ -32,7 +32,7 @@ export default {
 .data {
   display: flex;
   align-items: flex-end;
-  height: 50%;
+  height: 300px;
   max-width: 95%;
 }
 
