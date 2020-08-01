@@ -1,6 +1,6 @@
 <template>
   <b-container fluid="sm">
-    <b-row align-h="center" class="mt-2" no-gutters>
+    <b-row align-h="center" no-gutters>
       <b-col cols="6" md="4" lg="3" align-self="center" fluid>
         <b-form-select v-model="selected" :options="options"> </b-form-select>
       </b-col>
@@ -10,7 +10,7 @@
     </b-row>
     <b-row align-h="center" class="mt-2" no-gutters>
       <b-col cols="auto" align-self="center" class="mx-2">
-        <b-button @click="$emit('new-array')">New Array</b-button>
+        <b-button @click="$emit('new-array')">Reset</b-button>
       </b-col>
       <b-col cols="auto" align-self="center">
         <b-button v-b-toggle.collapse-1>More Info</b-button>
