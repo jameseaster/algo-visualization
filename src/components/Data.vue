@@ -1,6 +1,11 @@
 <template>
   <b-container class="data" fluid>
-    <b-row class="mx-auto" v-for="(num, index) in numbers" v-bind:key="index">
+    <b-row
+      class="mx-auto"
+      :style="{ 'flex-grow': 1 }"
+      v-for="(num, index) in numbers"
+      v-bind:key="index"
+    >
       <div
         class="numbers mx-auto"
         :style="{
@@ -30,10 +35,9 @@ export default {
   height: 50%;
   max-width: 95%;
 }
+
 .numbers {
   flex-grow: 1;
-  color: white;
-  background-color: dodgerblue;
   border-radius: 5px 5px 0px 0px;
 }
 </style>
