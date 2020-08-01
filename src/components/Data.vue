@@ -31,7 +31,7 @@ export default {
   max-width: 95%;
 }
 .numbers {
-  flex-grow: 100;
+  flex-grow: 1;
   color: white;
   background-color: dodgerblue;
   border-radius: 5px 5px 0px 0px;
