@@ -15,7 +15,7 @@
         dark
         height="20"
         :step="step"
-        @end="$emit('numberChange', quantity)"
+        @change="$emit('numberChange', quantity)"
         hide-details
       ></v-slider>
     </b-row>
