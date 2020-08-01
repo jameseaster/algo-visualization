@@ -1,7 +1,8 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <Header />
-    <Data v-bind:numbers="numbers" />
+    <Data v-bind:numbers="numbers" :quantity="quantity" />
+    <Slider @numberChange="numberChange" />
     <Dropdown
       @new-array="populateArray"
       @bubble="bubble"
@@ -11,7 +12,7 @@
       @heap="heap"
       @merge="merge"
     />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -19,6 +20,7 @@ import Vue from "vue";
 import VueWindowSize from "vue-window-size";
 Vue.use(VueWindowSize);
 
+import Slider from "./components/Slider";
 import Dropdown from "./components/Dropdown.vue";
 import Header from "./components/Header.vue";
 import Data from "./components/Data.vue";
@@ -35,6 +37,7 @@ export default {
     Header,
     Data,
     Dropdown,
+    Slider,
   },
   data() {
     return {
@@ -44,6 +47,7 @@ export default {
       sorted: "#A768C4",
       lastAlgo: "",
       width: this.windowWidth,
+      quantity: 40,
     };
   },
   computed: {
@@ -55,11 +59,14 @@ export default {
     this.populateArray();
   },
   methods: {
+    numberChange: function(number) {
+      this.quantity = number;
+      this.populateArray();
+    },
     populateArray: function() {
       this.lastAlgo = "";
       this.numbers = [];
-      const length = this.windowWidth > 650 ? 60 : 30;
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < this.quantity; i++) {
         let value = Math.round(Math.random() * 250) + 10;
         let color = this.primary;
         this.numbers.push({ value, color });
@@ -87,7 +94,6 @@ export default {
     },
     merge: function() {
       this.lastAlgo = "merge";
-      console.log("test");
       this.animate(mergeSort(this, this.numbers));
     },
     animate: async function(animations) {
