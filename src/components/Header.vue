@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>Sorting Visualizer</h1>
-  </div>
+  <b-container>
+    <h2>Sorting Visualizer</h2>
+  </b-container>
 </template>
 
 <script>
