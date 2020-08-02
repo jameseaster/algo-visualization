@@ -10,7 +10,7 @@ async function selectionSort(ref, array) {
       ref.$set(array, i, { value: iIdx, color: ref.compare });
 
       // pauses the event loop to better visualize the algo
-      await new Promise((resolve) => setTimeout(resolve, 1));
+      await new Promise((resolve) => setTimeout(resolve, 20));
 
       // If a value smaller than the value at smallestIdx is found
       if (array[i].value < array[smallestIdx].value) {

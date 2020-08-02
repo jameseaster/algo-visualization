@@ -106,7 +106,7 @@ export default {
           });
 
           // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 20));
+          await new Promise((resolve) => setTimeout(resolve, 30));
 
           // changes the colors back to original color
           this.$set(this.numbers, todo.idx1, {
@@ -119,7 +119,7 @@ export default {
           });
         } else {
           // pauses the event loop to better visualize the algo
-          await new Promise((resolve) => setTimeout(resolve, 20));
+          await new Promise((resolve) => setTimeout(resolve, 30));
 
           // overwrite idx1 with idx2, change color to sorted
           this.$set(this.numbers, todo.idx1, {
