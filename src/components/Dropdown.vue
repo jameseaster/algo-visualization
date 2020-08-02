@@ -5,7 +5,9 @@
         <b-form-select v-model="selected" :options="options"> </b-form-select>
       </b-col>
       <b-col cols="auto" align-self="center" class="mx-2">
-        <b-button :value="selected" @click="$emit(selected)">Go!</b-button>
+        <b-button :value="selected" @click="handleClick(selected)"
+          >Go!</b-button
+        >
       </b-col>
     </b-row>
     <b-row align-h="center" class="mt-2" no-gutters>
@@ -30,9 +32,9 @@ export default {
   },
   data() {
     return {
-      selected: "",
+      selected: "toast",
       options: [
-        { value: "", text: "Select An Algorithm", disabled: true },
+        { value: "toast", text: "Select An Algorithm", disabled: true },
         { value: "bubble", text: "Bubble Sort" },
         { value: "insertion", text: "Insertion Sort" },
         { value: "selection", text: "Selection Sort" },
@@ -43,8 +45,21 @@ export default {
     };
   },
   methods: {
-    log: function(name) {
-      console.log(name);
+    handleClick: function(selected) {
+      if (selected !== "toast") {
+        this.$emit(selected);
+      } else {
+        this.toast();
+      }
+    },
+    toast: function() {
+      this.$bvToast.toast(`Select an algorithm to sort the columns`, {
+        autoHideDelay: 3000,
+        variant: "light",
+        toaster: "b-toaster-top-center",
+        solid: true,
+        className: ["toast"],
+      });
     },
   },
 };
