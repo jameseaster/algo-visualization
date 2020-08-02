@@ -2,7 +2,7 @@
   <v-app id="app">
     <Header />
     <Data v-bind:numbers="numbers" :quantity="quantity" />
-    <Slider @numberChange="numberChange" />
+    <Slider @changeSize="changeSize" />
     <Dropdown
       @new-array="populateArray"
       @bubble="bubble"
@@ -16,10 +16,6 @@
 </template>
 
 <script>
-import Vue from "vue";
-import VueWindowSize from "vue-window-size";
-Vue.use(VueWindowSize);
-
 import Slider from "./components/Slider";
 import Dropdown from "./components/Dropdown.vue";
 import Header from "./components/Header.vue";
@@ -46,20 +42,14 @@ export default {
       compare: "#66FCF1",
       sorted: "#A768C4",
       lastAlgo: "",
-      width: this.windowWidth,
-      quantity: 40,
+      quantity: 42,
     };
-  },
-  computed: {
-    wideView: function() {
-      return this.windowWidth > 500;
-    },
   },
   created() {
     this.populateArray();
   },
   methods: {
-    numberChange: function(number) {
+    changeSize: function(number) {
       this.quantity = number;
       this.populateArray();
     },
@@ -174,6 +164,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #feffff;
-  margin-top: 60px;
+  margin-top: 40px;
+}
+.toast {
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
+  text-align: center;
+  font-size: x-large !important;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 </style>
